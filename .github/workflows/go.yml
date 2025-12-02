@@ -21,6 +21,10 @@ on:
         description: "grep -E regex for excluding certain packages from coverage reporting"
       skip-race-tests:
         type: boolean
+      free-disk-space:
+        type: boolean
+        default: false
+        description: "Create additional disk space for compilation by removing unnecessary toolchains"
 
 jobs:
   build_and_test:
@@ -40,6 +44,14 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           persist-credentials: false
+
+      - name: Free disk space
+        if: ${{ inputs.free-disk-space }}
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+
       - name: Set up Go
         uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
         with:
@@ -116,6 +128,13 @@ jobs:
         with:
           fetch-depth: "0"
           persist-credentials: false
+
+      - name: Free disk space
+        if: ${{ inputs.free-disk-space }}
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
 
       - name: Install Go
         uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # v6.1.0
