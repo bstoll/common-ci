@@ -1,5 +1,8 @@
 # Common CI workflows for OpenConfig Projects
 
+[![License: Apache](https://img.shields.io/badge/license-Apache%202-blue)](https://opensource.org/licenses/Apache-2.0)
+[![Downstream Validation](https://github.com/openconfig/common-ci/actions/workflows/test_downstream.yml/badge.svg?branch=main)](https://github.com/openconfig/common-ci/actions/workflows/test_downstream.yml)
+
 ## Upgrading CI Version
 
 ### Automatically Updating CI Version

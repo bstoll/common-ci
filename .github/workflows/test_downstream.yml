@@ -1,0 +1,57 @@
+name: Downstream Validation
+
+on:
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: "0 0 * * *"
+
+permissions: {}
+
+jobs:
+  test_go:
+    name: Test Go for ${{ matrix.repo }}
+    permissions:
+      contents: read
+      statuses: write
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - openconfig/goyang
+          - openconfig/containerz
+          - openconfig/kne
+          - openconfig/attestz
+    uses: ./.github/workflows/go.yml
+
+  test_basic_go:
+    name: Test Basic Go for ${{ matrix.repo }}
+    permissions:
+      contents: read
+      statuses: write
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - openconfig/entity-naming
+          - openconfig/gocloser
+          - openconfig/models-ci
+          - openconfig/gnoi
+          - openconfig/ygnmi
+    uses: ./.github/workflows/basic_go.yml
+
+  test_linter:
+    name: Test Linter for ${{ matrix.repo }}
+    permissions:
+      contents: read
+      packages: read
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - openconfig/entity-naming
+          - openconfig/goyang
+          - openconfig/gocloser
+          - openconfig/containerz
+          - openconfig/kne
+    uses: ./.github/workflows/linter.yml
